@@ -15,7 +15,7 @@ async function run(): Promise<void> {
     console.log(authAuthority)
     console.log(accessKey)
     console.log(subdomainInfix)
-    console.log(updateType)
+    console.log('updateType', updateType)
   } catch (error) {
     core.setFailed(error.message)
   }
