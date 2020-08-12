@@ -1,5 +1,6 @@
 module.exports = {
-  '*.ts': ['eslint --fix', 'npm run build && npm run package'],
+  '*.ts': ['eslint --fix'],
   '**/*.ts': () => 'tsc -p tsconfig.json --noEmit',
   '*.{ts,json,md,yml}': ['prettier --write'],
+  '**/*.*': () => ['tsc', 'ncc build --source-map'],
 }
