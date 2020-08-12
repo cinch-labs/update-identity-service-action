@@ -12,12 +12,15 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
 
   try {
     await axios.post(url, data, config)
+    core.info(`Successfully update identity service with infix '${subdomainInfix}'.`)
   } catch (error) {
-    if (error.response.status === 403) {
-      core.setFailed('Incorrect access key provided for identity service request')
-    } else {
-      core.setFailed(error.message)
+    if (error.response.status === 409) {
+      core.info(`Identity service already contains infix '${subdomainInfix}', nothing to update.`)
     }
+    if (error.response.status === 403) {
+      core.setFailed('Incorrect access key provided for identity service request.')
+    }
+    core.setFailed(error.message)
   }
 }
 
