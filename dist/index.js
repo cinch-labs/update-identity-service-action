@@ -488,6 +488,72 @@ module.exports = {
 
 /***/ }),
 
+/***/ 40:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core = __importStar(__webpack_require__(470));
+const axios_1 = __importDefault(__webpack_require__(53));
+const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = `${authAuthority}/api/configuration/environments`;
+    const data = { infix: subdomainInfix, key: accessKey };
+    const config = {
+        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+    };
+    try {
+        yield axios_1.default.post(url, data, config);
+        core.info(`Successfully added infix '${subdomainInfix}' to identity service`);
+    }
+    catch (error) {
+        if (error.response.status === 409) {
+            core.info(`Identity service already contains infix '${subdomainInfix}', nothing to update`);
+        }
+        else if (error.response.status === 403) {
+            core.setFailed('Incorrect access key provided for identity service request');
+        }
+        else {
+            core.setFailed(error.message);
+        }
+    }
+});
+exports.default = addSubdomainToIdentityService;
+
+
+/***/ }),
+
 /***/ 53:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -945,6 +1011,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const utils_1 = __webpack_require__(95);
 const updater_1 = __webpack_require__(352);
+const types_1 = __webpack_require__(251);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -952,8 +1019,11 @@ function run() {
             const authAuthority = core.getInput('auth-authority');
             const accessKey = core.getInput('access-key');
             const subdomainInfix = core.getInput('subdomain-infix');
-            if (updateType === 'add') {
+            if (updateType === types_1.UpdateType.ADD) {
                 updater_1.addSubdomainToIdentityService(authAuthority, accessKey, subdomainInfix);
+            }
+            if (updateType === types_1.UpdateType.REMOVE) {
+                updater_1.removeSubdomainFromIdentityService(authAuthority, accessKey, subdomainInfix);
             }
         }
         catch (error) {
@@ -962,6 +1032,65 @@ function run() {
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 202:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core = __importStar(__webpack_require__(470));
+const axios_1 = __importDefault(__webpack_require__(53));
+const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = `${authAuthority}/api/configuration/environments`;
+    const data = { infix: subdomainInfix, key: accessKey };
+    const config = {
+        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+        data,
+    };
+    try {
+        yield axios_1.default.delete(url, config);
+        core.info(`Successfully removed infix '${subdomainInfix}' from identity service`);
+    }
+    catch (error) {
+        core.setFailed(error.message);
+    }
+});
+exports.default = removeSubdomainFromIdentityService;
 
 
 /***/ }),
@@ -1502,6 +1631,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 251:
+/***/ (function(__unusedmodule, exports) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpdateType = void 0;
+var UpdateType;
+(function (UpdateType) {
+    UpdateType["ADD"] = "add";
+    UpdateType["REMOVE"] = "remove";
+})(UpdateType = exports.UpdateType || (exports.UpdateType = {}));
+
+
+/***/ }),
+
 /***/ 283:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -1760,80 +1905,15 @@ exports.enable(load());
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeSubdomainFromIdentityService = exports.addSubdomainToIdentityService = void 0;
-const core = __importStar(__webpack_require__(470));
-const axios_1 = __importDefault(__webpack_require__(53));
-const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = `${authAuthority}/api/configuration/environments`;
-    const data = { infix: subdomainInfix, key: accessKey };
-    const config = {
-        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
-    };
-    try {
-        yield axios_1.default.post(url, data, config);
-        core.info(`Successfully added infix '${subdomainInfix}' to identity service`);
-    }
-    catch (error) {
-        if (error.response.status === 409) {
-            core.info(`Identity service already contains infix '${subdomainInfix}', nothing to update`);
-        }
-        else if (error.response.status === 403) {
-            core.setFailed('Incorrect access key provided for identity service request');
-        }
-        else {
-            core.setFailed(error.message);
-        }
-    }
-});
-exports.addSubdomainToIdentityService = addSubdomainToIdentityService;
-const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = `${authAuthority}/api/configuration/environments`;
-    const data = { infix: subdomainInfix, key: accessKey };
-    const config = {
-        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
-        data,
-    };
-    try {
-        yield axios_1.default.delete(url, config);
-        core.info(`Successfully removed infix '${subdomainInfix}' from identity service`);
-    }
-    catch (error) {
-        core.setFailed(error.message);
-    }
-});
-exports.removeSubdomainFromIdentityService = removeSubdomainFromIdentityService;
+const add_subdomain_1 = __importDefault(__webpack_require__(40));
+exports.addSubdomainToIdentityService = add_subdomain_1.default;
+const remove_subdomain_1 = __importDefault(__webpack_require__(202));
+exports.removeSubdomainFromIdentityService = remove_subdomain_1.default;
 
 
 /***/ }),
@@ -3319,17 +3399,38 @@ module.exports = function httpAdapter(config) {
 /***/ }),
 
 /***/ 688:
-/***/ (function(__unusedmodule, exports) {
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUpdateType = void 0;
+const core = __importStar(__webpack_require__(470));
+const types_1 = __webpack_require__(251);
 const getUpdateType = (input) => {
-    if (input !== 'add' && input !== 'remove') {
-        return new Error('Input update-type must be either "add" or "remove"');
+    if (input === types_1.UpdateType.ADD || input === types_1.UpdateType.REMOVE) {
+        return input;
     }
-    return input;
+    core.setFailed('Input update-type must be either "add" or "remove"');
 };
 exports.getUpdateType = getUpdateType;
 

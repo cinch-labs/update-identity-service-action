@@ -1,11 +1,15 @@
-type UpdateType = (input: string) => 'add' | 'remove' | Error
+import * as core from '@actions/core'
 
-const getUpdateType: UpdateType = (input) => {
-  if (input !== 'add' && input !== 'remove') {
-    return new Error('Input update-type must be either "add" or "remove"')
+import { UpdateType } from '../types'
+
+type GetUpdateType = (input: UpdateType) => UpdateType | void
+
+const getUpdateType: GetUpdateType = (input) => {
+  if (input === UpdateType.ADD || input === UpdateType.REMOVE) {
+    return input
   }
 
-  return input
+  core.setFailed('Input update-type must be either "add" or "remove"')
 }
 
 export { getUpdateType }
