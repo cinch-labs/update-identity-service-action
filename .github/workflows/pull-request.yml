@@ -57,12 +57,12 @@ jobs:
         with:
           auth-authority: https://identity-dev.cinch.co.uk
           access-key: ${{ secrets.ACCESS_KEY }}
-          subdomain-infix: sheeps
+          subdomain-infix: sheepdog
 
       - name: Removing an infix
         uses: ./
         with:
           auth-authority: https://identity-dev.cinch.co.uk
           access-key: ${{ secrets.ACCESS_KEY }}
-          subdomain-infix: sheeps
+          subdomain-infix: sheepdog
           update-type: remove
