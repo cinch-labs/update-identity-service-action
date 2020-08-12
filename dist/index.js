@@ -1774,7 +1774,7 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
             throw new Error('Incorrect access key provided for identity service request');
         }
         else {
-            throw new Error(error.response.statusText);
+            throw new Error('Something else');
         }
     }
 });

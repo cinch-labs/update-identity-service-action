@@ -16,7 +16,7 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
     if (error.response.status === 403) {
       throw new Error('Incorrect access key provided for identity service request')
     } else {
-      throw new Error(error.response.statusText)
+      throw new Error('Something else')
     }
   }
 }
