@@ -1,11 +1,7 @@
 name: 'Build & Test'
 
-on: # rebuild any PRs and main branch changes
+on:
   pull_request:
-  push:
-    branches:
-      - main
-      - 'releases/*'
 
 jobs:
   build: # make sure build/ci work properly
@@ -28,4 +24,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 1000
+          auth-authority: https://identity-uat.cinch.co.uk
+          access-key: 1234
+          subdomain-infix: sheep

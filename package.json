@@ -26,9 +26,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11"
+    "@actions/core": "^1.2.4"
   },
   "devDependencies": {
     "@cinch-labs/eslint-config": "^1.4.0",
@@ -40,9 +38,11 @@
     "eslint": "^7.5.0",
     "eslint-plugin-github": "^4.1.1",
     "eslint-plugin-jest": "^23.18.0",
+    "husky": "^4.2.5",
     "jest": "^24.9.0",
     "jest-circus": "^26.1.0",
     "js-yaml": "^3.14.0",
+    "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
     "ts-jest": "^24.3.0",
     "typescript": "^3.9.7"
