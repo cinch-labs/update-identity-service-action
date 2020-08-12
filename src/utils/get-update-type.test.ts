@@ -6,9 +6,7 @@ describe('getUpdateType', () => {
     expect(getUpdateType('delete')).toEqual('delete')
   })
 
-  it('throws an error if it is neither "add" nor "delete"', () => {
-    expect(() => {
-      getUpdateType('sheepdog')
-    }).toThrowError('Input update-type must be either "add" or "delete"')
+  it('returns an error if it is neither "add" nor "delete"', () => {
+    expect(getUpdateType('sheepdog')).toEqual(new Error('Input update-type must be either "add" or "delete"'))
   })
 })

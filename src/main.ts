@@ -8,7 +8,7 @@ async function run(): Promise<void> {
   try {
     const authAuthority = core.getInput('auth-authority')
     const accessKey = core.getInput('access-key')
-    const subdomainInfix = core.getInput('subdomain-prefix')
+    const subdomainInfix = core.getInput('subdomain-infix')
 
     const updateType = getUpdateType(core.getInput('update-type'))
 
