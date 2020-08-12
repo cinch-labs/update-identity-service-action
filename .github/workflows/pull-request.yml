@@ -56,5 +56,5 @@ jobs:
         uses: ./
         with:
           auth-authority: https://identity-dev.cinch.co.uk
-          access-key: 1234
+          access-key: ${{ secrets.ACCESS_KEY }}
           subdomain-infix: sheeps
