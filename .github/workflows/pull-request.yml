@@ -6,23 +6,43 @@ on:
 jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
           registry-url: 'https://npm.pkg.github.com/'
           scope: '@cinch-labs'
-      - run: npm install
+
+      - name: Install dependencies
+        run: npm install
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
-      - run: npm run all
+
+      - name: Lint
+        run: npm run lint:check
+
+      - name: Prettier Check
+        run: npm run prettier:check
+
+      - name: Compile TypeScript
+        run: npm run build
+
+      - name: Package action
+        run: npm run package
+
+      - name: Unit tests
+        run: npm run test
 
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
+
+      - name: Test action
+        uses: ./
         with:
           auth-authority: https://identity-uat.cinch.co.uk
           access-key: 1234
