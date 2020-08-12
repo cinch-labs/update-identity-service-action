@@ -12,7 +12,7 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
 
   try {
     await axios.post(url, data, config)
-    core.info(`Successfully update identity service with infix '${subdomainInfix}'`)
+    core.info(`Successfully added infix '${subdomainInfix}' to identity service`)
   } catch (error) {
     if (error.response.status === 409) {
       core.info(`Identity service already contains infix '${subdomainInfix}', nothing to update`)
@@ -24,4 +24,20 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
   }
 }
 
-export { addSubdomainToIdentityService }
+const removeSubdomainFromIdentityService: UpdateIdentityService = async (authAuthority, accessKey, subdomainInfix) => {
+  const url = `${authAuthority}/api/configuration/environments`
+  const data = { infix: subdomainInfix, key: accessKey }
+  const config = {
+    headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+    data,
+  }
+
+  try {
+    await axios.delete(url, config)
+    core.info(`Successfully removed infix '${subdomainInfix}' from identity service`)
+  } catch (error) {
+    core.setFailed(error.message)
+  }
+}
+
+export { addSubdomainToIdentityService, removeSubdomainFromIdentityService }

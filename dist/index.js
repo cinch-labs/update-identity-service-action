@@ -1792,7 +1792,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addSubdomainToIdentityService = void 0;
+exports.removeSubdomainFromIdentityService = exports.addSubdomainToIdentityService = void 0;
 const core = __importStar(__webpack_require__(470));
 const axios_1 = __importDefault(__webpack_require__(53));
 const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
@@ -1803,7 +1803,7 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
     };
     try {
         yield axios_1.default.post(url, data, config);
-        core.info(`Successfully update identity service with infix '${subdomainInfix}'`);
+        core.info(`Successfully added infix '${subdomainInfix}' to identity service`);
     }
     catch (error) {
         if (error.response.status === 409) {
@@ -1818,6 +1818,22 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
     }
 });
 exports.addSubdomainToIdentityService = addSubdomainToIdentityService;
+const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = `${authAuthority}/api/configuration/environments`;
+    const data = { infix: subdomainInfix, key: accessKey };
+    const config = {
+        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+        data,
+    };
+    try {
+        yield axios_1.default.delete(url, config);
+        core.info(`Successfully removed infix '${subdomainInfix}' from identity service`);
+    }
+    catch (error) {
+        core.setFailed(error.message);
+    }
+});
+exports.removeSubdomainFromIdentityService = removeSubdomainFromIdentityService;
 
 
 /***/ }),
