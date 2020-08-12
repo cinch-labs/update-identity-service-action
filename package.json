@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "update-identity-service",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub action to update subdomains on the identity service",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/cinch-labs/update-identity-service.git"
   },
   "keywords": [
     "actions",
@@ -28,6 +28,8 @@
     "@actions/core": "^1.2.4"
   },
   "devDependencies": {
+    "@cinch-labs/eslint-config": "^1.4.0",
+    "@cinch-labs/prettier-config": "1.0.0",
     "@types/jest": "^26.0.7",
     "@types/node": "^14.0.25",
     "@typescript-eslint/parser": "^3.7.0",
