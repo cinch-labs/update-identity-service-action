@@ -55,6 +55,6 @@ jobs:
       - name: Test action
         uses: ./
         with:
-          auth-authority: https://identity-uat.cinch.co.uk
+          auth-authority: https://identity-dev.cinch.co.uk
           access-key: 1234
           subdomain-infix: sheeps
