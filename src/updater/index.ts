@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import axios from 'axios'
 
 type UpdateIdentityService = (authAuthority: string, accessKey: string, subdomainInfix: string) => void
@@ -10,13 +11,12 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
   }
 
   try {
-    const response = await axios.post(url, data, config)
-    console.log(response)
+    await axios.post(url, data, config)
   } catch (error) {
     if (error.response.status === 403) {
-      return new Error('Incorrect access key provided for identity service request')
+      core.setFailed('Incorrect access key provided for identity service request')
     } else {
-      return new Error('Something else')
+      core.setFailed(error.message)
     }
   }
 }
