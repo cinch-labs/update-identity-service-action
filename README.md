@@ -6,7 +6,7 @@
 
 To add and delete subdomains from the identity service
 
-## Code in Main
+## Develop
 
 Install the dependencies
 
@@ -33,35 +33,6 @@ $ npm test
 ...
 ```
 
-## Publish to a distribution branch
+## Publish
 
-Actions are run from GitHub repos so we will checkin the packed dist folder.
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Your action is now published! :rocket:
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/cinch-labs/update-identity-service/actions) for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+Create a GitHub release either by creating a tag for it locally or in the UI
