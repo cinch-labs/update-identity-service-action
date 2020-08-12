@@ -1807,6 +1807,7 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
     }
     catch (error) {
         if (error.response.status === 409) {
+            core.info(error.message);
             core.info(`Identity service already contains infix '${subdomainInfix}', nothing to update.`);
         }
         if (error.response.status === 403) {

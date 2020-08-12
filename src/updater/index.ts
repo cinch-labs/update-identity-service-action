@@ -15,6 +15,7 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
     core.info(`Successfully update identity service with infix '${subdomainInfix}'.`)
   } catch (error) {
     if (error.response.status === 409) {
+      core.info(error.message)
       core.info(`Identity service already contains infix '${subdomainInfix}', nothing to update.`)
     }
     if (error.response.status === 403) {
