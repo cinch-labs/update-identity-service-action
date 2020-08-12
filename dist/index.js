@@ -49,6 +49,67 @@ require('./sourcemap-register.js');module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ 13:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(35);
+var bind = __webpack_require__(727);
+var Axios = __webpack_require__(779);
+var mergeConfig = __webpack_require__(825);
+var defaults = __webpack_require__(529);
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(826);
+axios.CancelToken = __webpack_require__(137);
+axios.isCancel = __webpack_require__(732);
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(879);
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+
+/***/ }),
+
 /***/ 26:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
@@ -427,28 +488,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ 49:
-/***/ (function(__unusedmodule, exports) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUpdateType = void 0;
-const getUpdateType = (input) => {
-    if (input !== 'add' && input !== 'remove') {
-        return new Error('Input update-type must be either "add" or "remove"');
-    }
-    return input;
-};
-exports.getUpdateType = getUpdateType;
-
-
-/***/ }),
-
 /***/ 53:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
-module.exports = __webpack_require__(352);
+module.exports = __webpack_require__(13);
 
 /***/ }),
 
@@ -483,7 +526,7 @@ module.exports = require("os");
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUpdateType = void 0;
-const get_update_type_1 = __webpack_require__(49);
+const get_update_type_1 = __webpack_require__(688);
 Object.defineProperty(exports, "getUpdateType", { enumerable: true, get: function () { return get_update_type_1.getUpdateType; } });
 
 
@@ -870,25 +913,6 @@ function coerce(val) {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -902,36 +926,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core = __importStar(__webpack_require__(470));
-const axios_1 = __importDefault(__webpack_require__(53));
+const core_1 = __importDefault(__webpack_require__(470));
 const utils_1 = __webpack_require__(95);
-const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = `${authAuthority}/api/configuration/environments`;
-    const data = { infix: subdomainInfix, key: accessKey };
-    const config = {
-        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
-    };
-    try {
-        const response = yield axios_1.default.post(url, data, config);
-        console.log(response);
-    }
-    catch (error) {
-        core.setFailed(error.message);
-    }
-});
+const updater_1 = __webpack_require__(352);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const updateType = utils_1.getUpdateType(core.getInput('update-type'));
-            const authAuthority = core.getInput('auth-authority');
-            const accessKey = core.getInput('access-key');
-            const subdomainInfix = core.getInput('subdomain-infix');
+            const updateType = utils_1.getUpdateType(core_1.default.getInput('update-type'));
+            const authAuthority = core_1.default.getInput('auth-authority');
+            const accessKey = core_1.default.getInput('access-key');
+            const subdomainInfix = core_1.default.getInput('subdomain-infix');
             if (updateType === 'add') {
-                addSubdomainToIdentityService(authAuthority, accessKey, subdomainInfix);
+                updater_1.addSubdomainToIdentityService(authAuthority, accessKey, subdomainInfix);
             }
         }
         catch (error) {
-            core.setFailed(error.message);
+            core_1.default.setFailed(error.message);
         }
     });
 }
@@ -958,7 +968,7 @@ var settle = __webpack_require__(564);
 var buildURL = __webpack_require__(133);
 var buildFullPath = __webpack_require__(960);
 var parseHeaders = __webpack_require__(631);
-var isURLSameOrigin = __webpack_require__(688);
+var isURLSameOrigin = __webpack_require__(777);
 var createError = __webpack_require__(26);
 
 module.exports = function xhrAdapter(config) {
@@ -1730,62 +1740,45 @@ exports.enable(load());
 /***/ }),
 
 /***/ 352:
-/***/ (function(module, __unusedexports, __webpack_require__) {
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
 
-
-var utils = __webpack_require__(35);
-var bind = __webpack_require__(727);
-var Axios = __webpack_require__(779);
-var mergeConfig = __webpack_require__(825);
-var defaults = __webpack_require__(529);
-
-/**
- * Create an instance of Axios
- *
- * @param {Object} defaultConfig The default config for the instance
- * @return {Axios} A new instance of Axios
- */
-function createInstance(defaultConfig) {
-  var context = new Axios(defaultConfig);
-  var instance = bind(Axios.prototype.request, context);
-
-  // Copy axios.prototype to instance
-  utils.extend(instance, Axios.prototype, context);
-
-  // Copy context to instance
-  utils.extend(instance, context);
-
-  return instance;
-}
-
-// Create the default instance to be exported
-var axios = createInstance(defaults);
-
-// Expose Axios class to allow class inheritance
-axios.Axios = Axios;
-
-// Factory for creating new instances
-axios.create = function create(instanceConfig) {
-  return createInstance(mergeConfig(axios.defaults, instanceConfig));
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
-
-// Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(826);
-axios.CancelToken = __webpack_require__(137);
-axios.isCancel = __webpack_require__(732);
-
-// Expose all/spread
-axios.all = function all(promises) {
-  return Promise.all(promises);
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-axios.spread = __webpack_require__(879);
-
-module.exports = axios;
-
-// Allow use of default import syntax in TypeScript
-module.exports.default = axios;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.addSubdomainToIdentityService = void 0;
+const axios_1 = __importDefault(__webpack_require__(53));
+const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = `${authAuthority}/api/configuration/environments`;
+    const data = { infix: subdomainInfix, key: accessKey };
+    const config = {
+        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+    };
+    try {
+        const response = yield axios_1.default.post(url, data, config);
+        console.log(response);
+    }
+    catch (error) {
+        if (error.response.status === 403) {
+            throw new Error('Incorrect access key provided for identity service request');
+        }
+        else {
+            throw new Error(error.response.statusText);
+        }
+    }
+});
+exports.addSubdomainToIdentityService = addSubdomainToIdentityService;
 
 
 /***/ }),
@@ -3271,6 +3264,63 @@ module.exports = function httpAdapter(config) {
 /***/ }),
 
 /***/ 688:
+/***/ (function(__unusedmodule, exports) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getUpdateType = void 0;
+const getUpdateType = (input) => {
+    if (input !== 'add' && input !== 'remove') {
+        return new Error('Input update-type must be either "add" or "remove"');
+    }
+    return input;
+};
+exports.getUpdateType = getUpdateType;
+
+
+/***/ }),
+
+/***/ 727:
+/***/ (function(module) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+
+/***/ 732:
+/***/ (function(module) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ 761:
+/***/ (function(module) {
+
+module.exports = require("zlib");
+
+/***/ }),
+
+/***/ 777:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
 "use strict";
@@ -3343,45 +3393,6 @@ module.exports = (
     })()
 );
 
-
-/***/ }),
-
-/***/ 727:
-/***/ (function(module) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-
-/***/ 732:
-/***/ (function(module) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-
-/***/ 761:
-/***/ (function(module) {
-
-module.exports = require("zlib");
 
 /***/ }),
 
