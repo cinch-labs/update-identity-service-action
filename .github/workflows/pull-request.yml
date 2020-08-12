@@ -26,4 +26,4 @@ jobs:
         with:
           auth-authority: https://identity-uat.cinch.co.uk
           access-key: 1234
-          subdomain-infix: sheep
+          subdomain-infix: sheeps
