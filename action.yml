@@ -4,7 +4,7 @@ author: 'cinch-labs'
 inputs:
   auth-authority:
     required: true
-    description: 'The auth authority you want to update (e.g. https://identity-uat.cinch.co.uk)'
+    description: 'The auth authority you want to update'
   access-key:
     required: true
     description: 'The access key for the identity service you want to update'
