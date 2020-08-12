@@ -12,9 +12,12 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
     headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
   }
 
-  const response = await axios.post(url, data, config)
-
-  console.log(response)
+  try {
+    const response = await axios.post(url, data, config)
+    console.log(response)
+  } catch (error) {
+    core.setFailed(error.message)
+  }
 }
 
 async function run(): Promise<void> {

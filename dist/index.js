@@ -911,8 +911,13 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
     const config = {
         headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
     };
-    const response = yield axios_1.default.post(url, data, config);
-    console.log(response);
+    try {
+        const response = yield axios_1.default.post(url, data, config);
+        console.log(response);
+    }
+    catch (error) {
+        core.setFailed(error.message);
+    }
 });
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
