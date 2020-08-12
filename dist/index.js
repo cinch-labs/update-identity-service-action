@@ -19,7 +19,13 @@ require('./sourcemap-register.js');module.exports =
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -47,6 +53,19 @@ require('./sourcemap-register.js');module.exports =
 /***/ (function(module) {
 
 module.exports = require("os");
+
+/***/ }),
+
+/***/ 95:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getUpdateType = void 0;
+const get_update_type_1 = __webpack_require__(688);
+Object.defineProperty(exports, "getUpdateType", { enumerable: true, get: function () { return get_update_type_1.getUpdateType; } });
+
 
 /***/ }),
 
@@ -85,16 +104,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
-const wait_1 = __webpack_require__(521);
+const utils_1 = __webpack_require__(95);
+// const addSubdomainToIdentityService = () => {}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const ms = core.getInput('milliseconds');
-            core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-            core.debug(new Date().toTimeString());
-            yield wait_1.wait(parseInt(ms, 10));
-            core.debug(new Date().toTimeString());
-            core.setOutput('time', new Date().toTimeString());
+            const authAuthority = core.getInput('auth-authority');
+            const accessKey = core.getInput('access-key');
+            const subdomainInfix = core.getInput('subdomain-prefix');
+            const updateType = utils_1.getUpdateType(core.getInput('update-type'));
+            console.log(authAuthority);
+            console.log(accessKey);
+            console.log(subdomainInfix);
+            console.log(updateType);
         }
         catch (error) {
             core.setFailed(error.message);
@@ -434,41 +456,28 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 521:
-/***/ (function(__unusedmodule, exports) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.wait = void 0;
-function wait(milliseconds) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise(resolve => {
-            if (isNaN(milliseconds)) {
-                throw new Error('milliseconds not a number');
-            }
-            setTimeout(() => resolve('done!'), milliseconds);
-        });
-    });
-}
-exports.wait = wait;
-
-
-/***/ }),
-
 /***/ 622:
 /***/ (function(module) {
 
 module.exports = require("path");
+
+/***/ }),
+
+/***/ 688:
+/***/ (function(__unusedmodule, exports) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getUpdateType = void 0;
+const getUpdateType = (input) => {
+    if (input !== 'add' && input !== 'delete') {
+        throw new Error('Input update-type must be either "add" or "delete"');
+    }
+    return input;
+};
+exports.getUpdateType = getUpdateType;
+
 
 /***/ })
 
