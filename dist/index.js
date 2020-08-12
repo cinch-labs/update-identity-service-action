@@ -111,7 +111,7 @@ function run() {
         try {
             const authAuthority = core.getInput('auth-authority');
             const accessKey = core.getInput('access-key');
-            const subdomainInfix = core.getInput('subdomain-prefix');
+            const subdomainInfix = core.getInput('subdomain-infix');
             const updateType = utils_1.getUpdateType(core.getInput('update-type'));
             console.log(authAuthority);
             console.log(accessKey);
@@ -472,7 +472,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUpdateType = void 0;
 const getUpdateType = (input) => {
     if (input !== 'add' && input !== 'delete') {
-        throw new Error('Input update-type must be either "add" or "delete"');
+        return new Error('Input update-type must be either "add" or "delete"');
     }
     return input;
 };
