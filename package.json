@@ -11,8 +11,7 @@
     "prettier:fix": "prettier \"./**/*\" --check --write",
     "prettier:check": "prettier \"./**/*\" --check",
     "package": "ncc build --source-map",
-    "test": "jest",
-    "all": "npm run build && npm run lint:check && npm run prettier:check && npm run package && npm test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -26,7 +25,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4"
+    "@actions/core": "^1.2.4",
+    "axios": "^0.19.2"
   },
   "devDependencies": {
     "@cinch-labs/eslint-config": "^1.4.0",

@@ -4,26 +4,65 @@ on:
   pull_request:
 
 jobs:
-  build: # make sure build/ci work properly
+  quality-checks: # make sure build/ci work properly
+    name: Quality Checks
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
           registry-url: 'https://npm.pkg.github.com/'
           scope: '@cinch-labs'
-      - run: npm install
+
+      - name: Restore node_modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: 'node_modules'
+          key: v1-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm install
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
-      - run: npm run all
 
-  test: # make sure the action works on a clean machine without building
+      - name: Lint
+        run: npm run lint:check
+
+      - name: Prettier Check
+        run: npm run prettier:check
+
+      - name: Compile TypeScript
+        run: npm run build
+
+      - name: Package action
+        run: npm run package
+
+      - name: Unit tests
+        run: npm run test
+
+  test-action: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
+    name: Test Action
+
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
+
+      - name: Adding an infix
+        uses: ./
         with:
-          auth-authority: https://identity-uat.cinch.co.uk
-          access-key: 1234
-          subdomain-infix: sheep
+          auth-authority: https://identity-dev.cinch.co.uk
+          access-key: ${{ secrets.ACCESS_KEY }}
+          subdomain-infix: sheepdog
+
+      - name: Removing an infix
+        uses: ./
+        with:
+          auth-authority: https://identity-dev.cinch.co.uk
+          access-key: ${{ secrets.ACCESS_KEY }}
+          subdomain-infix: sheepdog
+          update-type: remove

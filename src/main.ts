@@ -1,21 +1,25 @@
 import * as core from '@actions/core'
 
 import { getUpdateType } from './utils'
+import { addSubdomainToIdentityService, removeSubdomainFromIdentityService } from './updater'
 
-// const addSubdomainToIdentityService = () => {}
+import { UpdateType } from './types'
 
 async function run(): Promise<void> {
   try {
+    const updateType = getUpdateType(core.getInput('update-type') as UpdateType)
+
     const authAuthority = core.getInput('auth-authority')
     const accessKey = core.getInput('access-key')
-    const subdomainInfix = core.getInput('subdomain-prefix')
+    const subdomainInfix = core.getInput('subdomain-infix')
 
-    const updateType = getUpdateType(core.getInput('update-type'))
+    if (updateType === UpdateType.ADD) {
+      addSubdomainToIdentityService(authAuthority, accessKey, subdomainInfix)
+    }
 
-    console.log(authAuthority)
-    console.log(accessKey)
-    console.log(subdomainInfix)
-    console.log(updateType)
+    if (updateType === UpdateType.REMOVE) {
+      removeSubdomainFromIdentityService(authAuthority, accessKey, subdomainInfix)
+    }
   } catch (error) {
     core.setFailed(error.message)
   }
