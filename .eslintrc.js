@@ -1,12 +1,15 @@
 module.exports = {
-  extends: ['@cinch-labs/eslint-config'],
-  env: {
-    node: true,
-    es6: true,
-    jest: true,
-  },
-  parserOptions: {
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
+  ],
+  rules: {
+    'no-console': 1, // Avoid leaving console logs behind
+    'prefer-template': 1, // Prefer template strings
   },
 }
