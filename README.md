@@ -46,12 +46,14 @@ $ npm run build && npm run package
 
 1. Start work on a new branch and submit a PR
 
-2. When PR checks have passed, compile the action for release:
+2. When PR checks have passed, compile the action for release\*:
 
 ```bash
   npm run build
   npm run package
 ```
+
+<sub>\* These two commands are also run automatically as a git pre-commit hook</sub>
 
 3. Publish release using `standard-version` according to [semver](https://semver.org/):
 
