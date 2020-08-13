@@ -12,7 +12,7 @@ To add or remove the cinch-labs identity service's awareness of subdomains
   with:
     auth-authority: ${{ secrets.AUTH_AUTHORITY }}
     access-key: ${{ secrets.ACCESS_KEY }}
-    subdomain-infix: my-branch-name
+    subdomain-infix: my-subdomain
     update-type: add # "add" is the default so specifying this is optional
 ```
 
@@ -24,7 +24,7 @@ To add or remove the cinch-labs identity service's awareness of subdomains
   with:
     auth-authority: ${{ secrets.AUTH_AUTHORITY }}
     access-key: ${{ secrets.ACCESS_KEY }}
-    subdomain-infix: my-branch-name
+    subdomain-infix: my-subdomain
     update-type: remove
 ```
 
@@ -44,4 +44,21 @@ $ npm run build && npm run package
 
 ## Publish
 
-Create a GitHub release either by creating a tag for it locally or in the UI
+1. Start work on a new branch and submit a PR
+
+2. When PR checks have passed, compile the action for release:
+
+```bash
+  npm run build
+  npm run package
+```
+
+3. Publish release using `standard-version` according to [semver](https://semver.org/):
+
+```bash
+  npm run release-major # For a major release
+  npm run release-minor # For a minor release
+  npm run release-patch # For a patch release
+```
+
+4. Push your branch again & merge to master
