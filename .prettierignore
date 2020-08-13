@@ -4,3 +4,4 @@ node_modules/
 .eslintignore
 .gitignore
 .prettierignore
+.prettierrc.js
