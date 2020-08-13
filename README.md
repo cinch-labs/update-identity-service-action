@@ -63,4 +63,5 @@ $ npm run build && npm run package
   npm run release-patch # For a patch release
 ```
 
-4. Push your branch again & merge to master
+4. Push your release tags with `git push --follow-tags`
+5. Merge you PR into master
