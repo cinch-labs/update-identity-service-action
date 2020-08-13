@@ -1,6 +1,6 @@
 {
   "name": "update-identity-service",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "GitHub action to update subdomains on the identity service",
   "main": "lib/main.js",
@@ -8,9 +8,10 @@
     "build": "tsc",
     "lint:check": "eslint 'src/*.ts'",
     "lint:fix": "eslint 'src/*.ts' --fix",
-    "prettier:fix": "prettier \"./**/*\" --check --write",
-    "prettier:check": "prettier \"./**/*\" --check",
     "package": "ncc build --source-map",
+    "prettier:check": "prettier \"./**/*\" --check",
+    "prettier:fix": "prettier \"./**/*\" --check --write",
+    "release": "standard-version",
     "test": "jest"
   },
   "repository": {
@@ -37,13 +38,14 @@
     "@zeit/ncc": "^0.22.3",
     "eslint": "^7.5.0",
     "eslint-plugin-github": "^4.1.1",
-    "husky": "^4.2.5",
     "eslint-plugin-jest": "^23.20.0",
+    "husky": "^4.2.5",
     "jest": "^26.4.0",
     "jest-circus": "^26.4.0",
     "js-yaml": "^3.14.0",
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
+    "standard-version": "^8.0.2",
     "ts-jest": "^26.2.0",
     "typescript": "^3.9.7"
   }
