@@ -592,9 +592,11 @@ module.exports = require("os");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUpdateType = void 0;
+exports.checkInputContent = exports.getUpdateType = void 0;
 const get_update_type_1 = __webpack_require__(688);
 Object.defineProperty(exports, "getUpdateType", { enumerable: true, get: function () { return get_update_type_1.getUpdateType; } });
+const check_input_content_1 = __webpack_require__(758);
+Object.defineProperty(exports, "checkInputContent", { enumerable: true, get: function () { return check_input_content_1.checkInputContent; } });
 
 
 /***/ }),
@@ -1017,9 +1019,9 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const updateType = utils_1.getUpdateType(core.getInput('update-type'));
-            const authAuthority = core.getInput('auth-authority');
-            const accessKey = core.getInput('access-key');
-            const subdomainInfix = core.getInput('subdomain-infix');
+            const authAuthority = utils_1.checkInputContent(core.getInput('auth-authority'), types_1.Input.AUTH_AUTHORITY);
+            const accessKey = utils_1.checkInputContent(core.getInput('access-key'), types_1.Input.ACCESS_KEY);
+            const subdomainInfix = utils_1.checkInputContent(core.getInput('subdomain-infix'), types_1.Input.SUBDOMAIN_INFIX);
             if (updateType === types_1.UpdateType.ADD) {
                 updater_1.addSubdomainToIdentityService(authAuthority, accessKey, subdomainInfix);
             }
@@ -1638,7 +1640,14 @@ module.exports = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateType = void 0;
+exports.UpdateType = exports.Input = void 0;
+var Input;
+(function (Input) {
+    Input["UPDATE_TYPE"] = "update-type";
+    Input["ACCESS_KEY"] = "access-key";
+    Input["SUBDOMAIN_INFIX"] = "subdomain-infix";
+    Input["AUTH_AUTHORITY"] = "auth-authority";
+})(Input = exports.Input || (exports.Input = {}));
 var UpdateType;
 (function (UpdateType) {
     UpdateType["ADD"] = "add";
@@ -3466,6 +3475,44 @@ module.exports = function bind(fn, thisArg) {
 module.exports = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
+
+
+/***/ }),
+
+/***/ 758:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkInputContent = void 0;
+const core = __importStar(__webpack_require__(470));
+const checkInputContent = (inputValue, inputLabel) => {
+    if (inputValue.length < 1) {
+        core.setFailed(`Value for '${inputLabel}' is empty. Are you sure you passed in its value correctly?`);
+    }
+    return inputValue;
+};
+exports.checkInputContent = checkInputContent;
 
 
 /***/ }),
