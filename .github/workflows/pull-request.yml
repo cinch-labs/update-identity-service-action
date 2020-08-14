@@ -55,7 +55,7 @@ jobs:
       - name: Adding an infix
         uses: ./
         with:
-          auth-authority: ''
+          auth-authority: ${{ secrets.AUTH_AUTHORITY }}
           access-key: ${{ secrets.ACCESS_KEY }}
           subdomain-infix: sheepdog
 
