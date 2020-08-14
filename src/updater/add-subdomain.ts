@@ -24,4 +24,4 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
   }
 }
 
-export default addSubdomainToIdentityService
+export { addSubdomainToIdentityService }

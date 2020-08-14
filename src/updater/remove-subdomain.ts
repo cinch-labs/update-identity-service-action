@@ -19,4 +19,4 @@ const removeSubdomainFromIdentityService: UpdateIdentityService = async (authAut
   }
 }
 
-export default removeSubdomainFromIdentityService
+export { removeSubdomainFromIdentityService }
