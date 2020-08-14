@@ -525,6 +525,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.addSubdomainToIdentityService = void 0;
 const core = __importStar(__webpack_require__(470));
 const axios_1 = __importDefault(__webpack_require__(53));
 const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
@@ -550,7 +551,7 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
         }
     }
 });
-exports.default = addSubdomainToIdentityService;
+exports.addSubdomainToIdentityService = addSubdomainToIdentityService;
 
 
 /***/ }),
@@ -1076,6 +1077,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.removeSubdomainFromIdentityService = void 0;
 const core = __importStar(__webpack_require__(470));
 const axios_1 = __importDefault(__webpack_require__(53));
 const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
@@ -1093,7 +1095,7 @@ const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainI
         core.setFailed(error.message);
     }
 });
-exports.default = removeSubdomainFromIdentityService;
+exports.removeSubdomainFromIdentityService = removeSubdomainFromIdentityService;
 
 
 /***/ }),
@@ -1915,15 +1917,12 @@ exports.enable(load());
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeSubdomainFromIdentityService = exports.addSubdomainToIdentityService = void 0;
-const add_subdomain_1 = __importDefault(__webpack_require__(40));
-exports.addSubdomainToIdentityService = add_subdomain_1.default;
-const remove_subdomain_1 = __importDefault(__webpack_require__(202));
-exports.removeSubdomainFromIdentityService = remove_subdomain_1.default;
+const add_subdomain_1 = __webpack_require__(40);
+Object.defineProperty(exports, "addSubdomainToIdentityService", { enumerable: true, get: function () { return add_subdomain_1.addSubdomainToIdentityService; } });
+const remove_subdomain_1 = __webpack_require__(202);
+Object.defineProperty(exports, "removeSubdomainFromIdentityService", { enumerable: true, get: function () { return remove_subdomain_1.removeSubdomainFromIdentityService; } });
 
 
 /***/ }),
