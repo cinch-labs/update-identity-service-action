@@ -46,7 +46,7 @@ jobs:
         run: npm run test
 
   integration-tests:
-    name: Integration tests
+    name: Integration Tests
     runs-on: ubuntu-latest
 
     steps:
