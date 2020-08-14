@@ -45,8 +45,8 @@ jobs:
       - name: Unit tests
         run: npm run test
 
-  test-action:
-    name: Test Action
+  integration-tests:
+    name: Integration tests
     runs-on: ubuntu-latest
 
     steps:
