@@ -528,6 +528,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const axios_1 = __importDefault(__webpack_require__(53));
 const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     const url = `${authAuthority}/api/configuration/environments`;
     const data = { infix: subdomainInfix, key: accessKey };
     const config = {
@@ -538,10 +539,10 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
         core.info(`Successfully added infix '${subdomainInfix}' to identity service`);
     }
     catch (error) {
-        if (error.response.status === 409) {
+        if (((_a = error.response) === null || _a === void 0 ? void 0 : _a.status) === 409) {
             core.info(`Identity service already contains infix '${subdomainInfix}', nothing to update`);
         }
-        else if (error.response.status === 403) {
+        else if (((_b = error.response) === null || _b === void 0 ? void 0 : _b.status) === 403) {
             core.setFailed('Incorrect access key provided for identity service request');
         }
         else {
