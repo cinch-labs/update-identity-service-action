@@ -8,7 +8,7 @@ To add or remove the cinch-labs identity service's awareness of subdomains
 
 ```yaml
 - name: Adding an infix
-  uses: cinch-labs/update-identity-service@latest
+  uses: cinch-labs/update-identity-service@main
   with:
     auth-authority: ${{ secrets.AUTH_AUTHORITY }}
     access-key: ${{ secrets.ACCESS_KEY }}
@@ -20,7 +20,7 @@ To add or remove the cinch-labs identity service's awareness of subdomains
 
 ```yaml
 - name: Adding an infix
-  uses: cinch-labs/update-identity-service@latest
+  uses: cinch-labs/update-identity-service@main
   with:
     auth-authority: ${{ secrets.AUTH_AUTHORITY }}
     access-key: ${{ secrets.ACCESS_KEY }}
@@ -44,9 +44,13 @@ $ npm run build && npm run package
 
 ## Publish
 
-1. Start work on a new branch and submit a PR
+1. Start work on a new branch. If you want to test your changes in a live scenario you can reference your branch's version of the action in the consuming workflow as follows:
 
-2. When PR checks have passed, compile the action for release\*:
+```yaml
+uses: cinch-labs/update-identity-service@your-branch-name
+```
+
+2. When you have finished your work, compile the action for release\* and push those changes:
 
 ```bash
   npm run build
@@ -55,13 +59,6 @@ $ npm run build && npm run package
 
 <sub>\* These two commands are also run automatically as a git pre-commit hook</sub>
 
-3. Publish release using `standard-version` according to [semver](https://semver.org/):
+3. Open a PR and, when the checks pass, merge it into `main`.
 
-```bash
-  npm run release-major # For a major release
-  npm run release-minor # For a minor release
-  npm run release-patch # For a patch release
-```
-
-4. Push your release tags with `git push --follow-tags`
-5. Merge you PR into master
+4. Congratulations your changes are now live!
