@@ -1,17 +1,17 @@
 import * as core from '@actions/core'
 
-import { getUpdateType } from './utils'
+import { getUpdateType, checkInputContent } from './utils'
 import { addSubdomainToIdentityService, removeSubdomainFromIdentityService } from './updater'
 
-import { UpdateType } from './types'
+import { UpdateType, Input } from './types'
 
 async function run(): Promise<void> {
   try {
     const updateType = getUpdateType(core.getInput('update-type') as UpdateType)
 
-    const authAuthority = core.getInput('auth-authority')
-    const accessKey = core.getInput('access-key')
-    const subdomainInfix = core.getInput('subdomain-infix')
+    const authAuthority = checkInputContent(core.getInput('auth-authority'), Input.AUTH_AUTHORITY)
+    const accessKey = checkInputContent(core.getInput('access-key'), Input.ACCESS_KEY)
+    const subdomainInfix = checkInputContent(core.getInput('subdomain-infix'), Input.SUBDOMAIN_INFIX)
 
     if (updateType === UpdateType.ADD) {
       addSubdomainToIdentityService(authAuthority, accessKey, subdomainInfix)
