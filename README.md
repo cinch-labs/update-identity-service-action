@@ -33,7 +33,7 @@ To add or remove the cinch-labs identity service's awareness of subdomains
 Install the dependencies
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 Build the typescript and package it for distribution
