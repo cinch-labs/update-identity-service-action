@@ -7,11 +7,12 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
   const url = `${authAuthority}/api/configuration/environments`
   const data = { infix: subdomainInfix, key: accessKey }
   const config = {
-    headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+    headers: { accept: '*/*', 'Content-Type': 'application/json' },
   }
 
   try {
     await axios.post(url, data, config)
+
     core.info(`Successfully added infix '${subdomainInfix}' to identity service`)
   } catch (error) {
     if (error.response?.status === 409) {
