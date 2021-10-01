@@ -2,6 +2,8 @@
 
 To add or remove the cinch-labs identity service's awareness of subdomains
 
+**Important: The way that custom TypeScript actions work is that they rely on you committing vanilla JS files to your main branch to then be referenced by consumers of the action. _Do not_ be alarmed by the fact that the dist folder is commit to version control and please _do not_ gitignore it!**
+
 ## Usage
 
 ### Adding a subdomain infix
@@ -42,7 +44,7 @@ Build the typescript and package it for distribution
 $ yarn build && yarn package
 ```
 
-## Publish
+## Testing
 
 1. Start work on a new branch. If you want to test your changes in a live scenario you can reference your branch's version of the action in the consuming workflow as follows:
 
@@ -61,4 +63,12 @@ uses: cinch-labs/update-identity-service@your-branch-name
 
 3. Open a PR and, when the checks pass, merge it into `main`.
 
-4. Congratulations your changes are now live!
+4. Congratulations your changes are now live on a branch!
+
+## Deployment
+
+Merging your PR into the `main` branch will:
+
+1. Trigger the same quality checks and integration tests that happen on a PR
+2. If these pass it will run a build and commit the built files to the `main` branch
+3. At this point your changes are live because any consumers of this action reference it by the `@main` label
