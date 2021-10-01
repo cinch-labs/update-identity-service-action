@@ -4,6 +4,10 @@ import axios from 'axios'
 import { UpdateIdentityService } from './types'
 
 const removeSubdomainFromIdentityService: UpdateIdentityService = async (authAuthority, accessKey, subdomainInfix) => {
+  console.log('authAuthority', authAuthority)
+  console.log('accessKey', accessKey)
+  console.log('subdomainInfix', subdomainInfix)
+
   const url = `${authAuthority}/api/configuration/environments`
   const data = { infix: subdomainInfix, key: accessKey }
   const config = {
