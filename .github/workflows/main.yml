@@ -1,6 +1,11 @@
 name: 'Build/test/deploy'
 
-on: push
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   quality-checks:
@@ -8,7 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout for pull_request_target
+        uses: actions/checkout@v2.3.4
+        if: ${{ github.event_name == 'pull_request_target' }}
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Normal checkout
+        uses: actions/checkout@v2.3.4
+        if: ${{ github.event_name != 'pull_request_target' }}
 
       - uses: actions/setup-node@v2.4.1
         with:
@@ -51,7 +64,15 @@ jobs:
       TEST_INFIX: sheepdog-${{ github.run_number }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout for pull_request_target
+        uses: actions/checkout@v2.3.4
+        if: ${{ github.event_name == 'pull_request_target' }}
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Normal checkout
+        uses: actions/checkout@v2.3.4
+        if: ${{ github.event_name != 'pull_request_target' }}
 
       - uses: actions/setup-node@v2.4.1
         with:
