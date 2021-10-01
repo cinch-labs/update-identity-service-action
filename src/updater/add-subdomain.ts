@@ -12,7 +12,7 @@ const addSubdomainToIdentityService: UpdateIdentityService = async (authAuthorit
 
   try {
     const response = await axios.post(url, data, config)
-    console.log(JSON.stringify(response))
+    core.info(JSON.stringify(response.data))
 
     core.info(`Successfully added infix '${subdomainInfix}' to identity service`)
   } catch (error) {

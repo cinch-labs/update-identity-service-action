@@ -544,7 +544,7 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
     };
     try {
         const response = yield axios_1.default.post(url, data, config);
-        console.log(JSON.stringify(response));
+        core.info(JSON.stringify(response.data));
         core.info(`Successfully added infix '${subdomainInfix}' to identity service`);
     }
     catch (error) {
