@@ -553,7 +553,7 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
     };
     try {
         yield axios_1.default.post(url, data, config);
-        core.info(`Successfully added infix '${subdomainInfix}' to identity service`);
+        core.info(`Successfully added the infix '${subdomainInfix}' to identity service`);
     }
     catch (error) {
         if (((_a = error.response) === null || _a === void 0 ? void 0 : _a.status) === 409) {
@@ -1673,7 +1673,7 @@ const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainI
     };
     try {
         yield axios_1.default.delete(url, config);
-        core.info(`Successfully removed infix '${subdomainInfix}' from identity service`);
+        core.info(`Successfully removed the infix '${subdomainInfix}' from identity service`);
     }
     catch (error) {
         core.setFailed(error.message);
