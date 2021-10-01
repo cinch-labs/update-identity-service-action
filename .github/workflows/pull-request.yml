@@ -1,7 +1,6 @@
-name: 'Pull Request'
+name: 'Build/test/deploy'
 
-on:
-  pull_request:
+on: push
 
 jobs:
   quality-checks:
@@ -90,3 +89,40 @@ jobs:
           access-key: ${{ secrets.ACCESS_KEY }}
           subdomain-infix: ${{ env.TEST_INFIX }}
           update-type: remove
+
+  build-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    needs: [quality-checks, integration-tests]
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '12'
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@cinch-labs'
+
+      - name: Restore node_modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: 'node_modules'
+          key: v1-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
+
+      - name: Build & package
+        run: yarn build && yarn package
+
+      - uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Deploy Bot
+          author_email: deploy-bot@cinch.co.uk
+          message: 'Builds and deploy latest changes'
