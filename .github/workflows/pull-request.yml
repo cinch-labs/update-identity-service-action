@@ -48,6 +48,8 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
+    env:
+      TEST_INFIX: sheepdog-${{ github.run_number }}
 
     steps:
       - uses: actions/checkout@v2
@@ -57,12 +59,12 @@ jobs:
         with:
           auth-authority: ${{ secrets.AUTH_AUTHORITY }}
           access-key: ${{ secrets.ACCESS_KEY }}
-          subdomain-infix: sheepdog
+          subdomain-infix: ${{ env.TEST_INFIX }}
 
       - name: Removing an infix
         uses: ./
         with:
           auth-authority: ${{ secrets.AUTH_AUTHORITY }}
           access-key: ${{ secrets.ACCESS_KEY }}
-          subdomain-infix: sheepdog
+          subdomain-infix: ${{ env.TEST_INFIX }}
           update-type: remove
