@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: 'node_modules'
-          key: v1-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: v1-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
         run: npm install
@@ -54,8 +54,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '12'
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@cinch-labs'
+
+      - name: Restore node_modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: 'node_modules'
+          key: v1-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: npm install
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GHP_TOKEN }}
+
       - name: Build
-        run: npm run build
+        run: npm run build && npm run package
 
       - name: Adding an infix
         uses: ./
