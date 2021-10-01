@@ -13,7 +13,7 @@ const removeSubdomainFromIdentityService: UpdateIdentityService = async (authAut
 
   try {
     await axios.delete(url, config)
-    core.info(`Successfully removed infix '${subdomainInfix}' from identity service`)
+    core.info(`Successfully removed the infix '${subdomainInfix}' from identity service`)
   } catch (error) {
     core.setFailed(error.message)
   }
