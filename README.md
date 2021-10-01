@@ -39,7 +39,7 @@ $ npm install
 Build the typescript and package it for distribution
 
 ```bash
-$ npm run build && npm run package
+$ yarn build && yarn package
 ```
 
 ## Publish
@@ -53,8 +53,8 @@ uses: cinch-labs/update-identity-service@your-branch-name
 2. When you have finished your work, compile the action for release\* and push those changes:
 
 ```bash
-  npm run build
-  npm run package
+  yarn build
+  yarn package
 ```
 
 <sub>\* These two commands are also run automatically as a git pre-commit hook</sub>
