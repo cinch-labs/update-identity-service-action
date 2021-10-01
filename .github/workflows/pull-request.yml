@@ -49,7 +49,7 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     env:
-      TEST_INFIX: sheepdog-${{ github.run_number }}
+      TEST_INFIX: sheepdog${{ github.run_number }}
 
     steps:
       - uses: actions/checkout@v2
