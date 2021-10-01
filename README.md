@@ -2,7 +2,7 @@
 
 To add or remove the cinch-labs identity service's awareness of subdomains
 
-**Important: The way that custom TypeScript actions work is that they rely on you committing vanilla JS files to your main branch to then be referenced by consumers of the action. _Do not_ be alarmed by the fact that the dist folder is commit to version control and please _do not_ gitignore it!**
+🚒 **Important: The way that custom TypeScript actions work is that they rely on you committing vanilla JS files to your main branch to then be referenced by consumers of the action. _Do not_ be alarmed by the fact that the dist folder is commit to version control and please _do not_ gitignore it!**
 
 ## Usage
 
