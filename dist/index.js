@@ -1164,9 +1164,6 @@ exports.removeSubdomainFromIdentityService = void 0;
 const core = __importStar(__webpack_require__(470));
 const axios_1 = __importDefault(__webpack_require__(53));
 const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainInfix) => __awaiter(void 0, void 0, void 0, function* () {
-    core.info(authAuthority);
-    core.info(accessKey);
-    core.info(subdomainInfix);
     const url = `${authAuthority}/api/configuration/environments`;
     const data = { infix: subdomainInfix, key: accessKey };
     const config = {
