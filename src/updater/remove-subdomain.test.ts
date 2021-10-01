@@ -13,7 +13,7 @@ describe('removeSubdomainFromIdentityService', () => {
     const expectedParameters = {
       url: `${authAuthority}/api/configuration/environments`,
       config: {
-        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+        headers: { accept: '*/*', 'Content-Type': 'application/json' },
         data: { infix: subdomainInfix, key: accessKey },
       },
     }
