@@ -540,7 +540,7 @@ const addSubdomainToIdentityService = (authAuthority, accessKey, subdomainInfix)
     const url = `${authAuthority}/api/configuration/environments`;
     const data = { infix: subdomainInfix, key: accessKey };
     const config = {
-        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+        headers: { accept: '*/*', 'Content-Type': 'application/json' },
     };
     try {
         yield axios_1.default.post(url, data, config);
@@ -1167,7 +1167,7 @@ const removeSubdomainFromIdentityService = (authAuthority, accessKey, subdomainI
     const url = `${authAuthority}/api/configuration/environments`;
     const data = { infix: subdomainInfix, key: accessKey };
     const config = {
-        headers: { accept: ' application/json', 'Content-Type': 'application/json-patch+json' },
+        headers: { accept: '*/*', 'Content-Type': 'application/json' },
         data,
     };
     try {
