@@ -524,7 +524,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -1582,7 +1582,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -1603,15 +1603,15 @@ const types_1 = __webpack_require__(251);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const updateType = utils_1.getUpdateType(core.getInput('update-type'));
-            const authAuthority = utils_1.checkInputContent(core.getInput('auth-authority'), types_1.Input.AUTH_AUTHORITY);
-            const accessKey = utils_1.checkInputContent(core.getInput('access-key'), types_1.Input.ACCESS_KEY);
-            const subdomainInfix = utils_1.checkInputContent(core.getInput('subdomain-infix'), types_1.Input.SUBDOMAIN_INFIX);
+            const updateType = (0, utils_1.getUpdateType)(core.getInput('update-type'));
+            const authAuthority = (0, utils_1.checkInputContent)(core.getInput('auth-authority'), types_1.Input.AUTH_AUTHORITY);
+            const accessKey = (0, utils_1.checkInputContent)(core.getInput('access-key'), types_1.Input.ACCESS_KEY);
+            const subdomainInfix = (0, utils_1.checkInputContent)(core.getInput('subdomain-infix'), types_1.Input.SUBDOMAIN_INFIX);
             if (updateType === types_1.UpdateType.ADD) {
-                updater_1.addSubdomainToIdentityService(authAuthority, accessKey, subdomainInfix);
+                (0, updater_1.addSubdomainToIdentityService)(authAuthority, accessKey, subdomainInfix);
             }
             if (updateType === types_1.UpdateType.REMOVE) {
-                updater_1.removeSubdomainFromIdentityService(authAuthority, accessKey, subdomainInfix);
+                (0, updater_1.removeSubdomainFromIdentityService)(authAuthority, accessKey, subdomainInfix);
             }
         }
         catch (error) {
@@ -1644,7 +1644,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -5123,7 +5123,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -5285,7 +5285,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
