@@ -142,7 +142,7 @@ jobs:
       - name: Build & package
         run: yarn build && yarn package
 
-      - uses: EndBug/add-and-commit@v8
+      - uses: EndBug/add-and-commit@v9
         with:
           author_name: Deploy Bot
           author_email: deploy-bot@cinch.co.uk
